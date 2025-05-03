@@ -1,5 +1,5 @@
 import React from 'react'
-import Comment from './Comment';
+import CommentList from './CommentList';
 
 const commentsData=[
     {
@@ -13,7 +13,29 @@ const commentsData=[
         replies:[ {
             name:"Navya",
             text:"Lorem ipsum dolor sit amet",
-            replies:[],
+            replies:[{
+                name:"Navya",
+                text:"Lorem ipsum dolor sit amet",
+                replies:[{
+                    name:"Navya",
+                    text:"Lorem ipsum dolor sit amet",
+                    replies:[],
+                }],
+            },
+            {
+                name:"Navya",
+                text:"Lorem ipsum dolor sit amet",
+                replies:[ {
+                    name:"Navya",
+                    text:"Lorem ipsum dolor sit amet",
+                    replies:[],
+                },
+                {
+                    name:"Navya",
+                    text:"Lorem ipsum dolor sit amet",
+                    replies:[],
+                }],
+            },],
         },{
             name:"Navya",
             text:"Lorem ipsum dolor sit amet",
@@ -89,7 +111,7 @@ const CommentContainer = () => {
   return (
     <div className="m-2 p-2">
         <h1 className="text-xl font-bold"> Comments:</h1>
-        <Comment data={commentsData}/>
+        <CommentList comments={commentsData}/>
     </div>
   )
 }
