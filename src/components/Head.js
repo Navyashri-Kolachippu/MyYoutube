@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleMenu } from '../utils/appSlice';
 import { YOUTUBE_SEARCH_API,GOOGLE_API_KEY } from '../utils/constants';
 import { cacheResult } from '../utils/searchSlice';
+import VideoContainer from './VideoContainer';
 
 const Head = () => {
 
@@ -42,6 +43,9 @@ const getSearchSuggestions=async()=>{
 const toggleMenuHandler=()=>{
  dispatch(toggleMenu());
 }
+const showSearchVideos=()=>{
+    <VideoContainer videoData={suggestions}/>
+}
   return (
     <div className="grid grid-flow-col p-5 m-2 shadow-lg">
         <div className="flex col-span-1">
@@ -61,7 +65,8 @@ const toggleMenuHandler=()=>{
         <div className="col-span-10 px-10">
         <div>
             <input className="w-1/2 p-2 border border-gray-400 rounded-l-full" type="text"
-              value={searchQuery} onFocus={()=>setShowSuggestions(true)} onBlur={()=>setShowSuggestions(false)} onChange={(e)=>setSearchQuery(e.target.value)}/>
+              value={searchQuery} onFocus={()=>setShowSuggestions(true)} onBlur={()=>setShowSuggestions(false)} onChange={(e)=>setSearchQuery(e.target.value)}
+              onClick={showSearchVideos}/>
             <button className="px-5 py-2 bg-gray-100 border border-gray-400 rounded-r-full"> 🔍</button>
         </div>
         {showSuggestions && (<div className="absolute bg-white py-2 px-2 w-[37rem] shadow-lg rounded-lg border border-gray-100">
