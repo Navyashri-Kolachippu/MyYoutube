@@ -1,10 +1,44 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { toggleMenu } from '../utils/appSlice';
+import { YOUTUBE_SEARCH_API,GOOGLE_API_KEY } from '../utils/constants';
+import { cacheResult } from '../utils/searchSlice';
 
 const Head = () => {
 
+const [searchQuery,setSearchQuery]=useState("");
+const [suggestions,setSuggestions]=useState([]);
+const [showSuggestions,setShowSuggestions]=useState(false);
+const cacheData=useSelector((store)=>store.search);
 const dispatch=useDispatch();
+
+useEffect(()=>{
+    if (!searchQuery || !searchQuery.trim()) return;
+    const timer=setTimeout(()=>
+        {
+            if(cacheData[searchQuery])
+            {
+            setSuggestions(cacheData[searchQuery]);
+            }
+            else
+            {
+            getSearchSuggestions();
+            }
+        },2000);
+
+    return()=>{
+        clearTimeout(timer);
+    }
+},[searchQuery])
+
+const getSearchSuggestions=async()=>{
+    const data = await fetch(`${YOUTUBE_SEARCH_API}${encodeURIComponent(searchQuery)}&key=${GOOGLE_API_KEY}`);
+    const json= await data.json();
+    console.log(json.items);
+    setSuggestions(json.items);
+    dispatch(cacheResult(
+        {[searchQuery]:json.items,}));
+}
 const toggleMenuHandler=()=>{
  dispatch(toggleMenu());
 }
@@ -25,8 +59,16 @@ const toggleMenuHandler=()=>{
         </a>
         </div>
         <div className="col-span-10 px-10">
-            <input className="w-1/2 p-2 border border-gray-400 rounded-l-full" type="text"/>
+        <div>
+            <input className="w-1/2 p-2 border border-gray-400 rounded-l-full" type="text"
+              value={searchQuery} onFocus={()=>setShowSuggestions(true)} onBlur={()=>setShowSuggestions(false)} onChange={(e)=>setSearchQuery(e.target.value)}/>
             <button className="px-5 py-2 bg-gray-100 border border-gray-400 rounded-r-full"> 🔍</button>
+        </div>
+        {showSuggestions && (<div className="absolute bg-white py-2 px-2 w-[37rem] shadow-lg rounded-lg border border-gray-100">
+            <ul>
+                {suggestions?.map((s) => (<li key={s?.snippet?.title} className="py-2 px-3 shadow-sm hover:bg-gray-100"> 🔍 {s?.snippet?.title}</li>))}
+            </ul>
+        </div>)}
         </div>
         <div className="col-span-1">
         <img
