@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
-import { findNthPrime } from "../utils/helper";
+import { useMemo, useState } from "react";
+import { findPrime } from "../utils/helper";
 
 const Demo=()=>{
     const [text,setText]=useState(0);
     const [isDarkTheme,setIsDarkTheme]=useState(false);
 
-    const prime=useMemo(()=>findNthPrime(text),[text]);
+    const prime=useMemo(()=>findPrime(text),[text]);
 
     return(
     <div 
