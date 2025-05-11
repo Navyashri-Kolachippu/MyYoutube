@@ -4,7 +4,7 @@ import VideoCard from "./VideoCard";
 import { Link } from 'react-router-dom';
 
 const VideoContainer = ({videoData}) => {
- console.log(videoData);
+ //console.log(videoData);
  const[videos,setVideos]= useState([]);
 
   useEffect(()=>{

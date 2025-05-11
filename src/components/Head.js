@@ -35,7 +35,7 @@ useEffect(()=>{
 const getSearchSuggestions=async()=>{
     const data = await fetch(`${YOUTUBE_SEARCH_API}${encodeURIComponent(searchQuery)}&key=${GOOGLE_API_KEY}`);
     const json= await data.json();
-    console.log(json.items);
+    //console.log(json.items);
     setSuggestions(json.items);
     dispatch(cacheResult(
         {[searchQuery]:json.items,}));

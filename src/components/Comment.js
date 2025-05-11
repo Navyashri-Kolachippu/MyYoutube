@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Comment=({data})=>{
-    console.log(data);
+    //console.log(data);
     const {name,text}=data;
     return(
         <div className="flex rounded-lg shadow-sm bg-gray-100 p-2 my-2">
