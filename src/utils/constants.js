@@ -6,3 +6,5 @@ GOOGLE_API_KEY;
 
 export const YOUTUBE_SEARCH_API =
   "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=";
+
+export const LIVE_CHAT_COUNT=50;
